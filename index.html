@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1" />
+    <title></title>
+  </head>
+  <body>
+    <style>
+      #background {
+        /* 
+        filter: blur(4px);
+        -webkit-filter: blur(4px); 
+        */
+      }
+    </style>
+
+    <iframe
+      id="background"
+      src="https://www.rickastley.co.uk/"
+      frameborder="0"
+    ></iframe>
+
+    <div class="cookie-banner-overlay">
+      <div class="cookie-banner">
+        <h2>Your Privacy Settings</h2>
+        <div class="text">
+          For the best experience, we use cookies and similar tools. Learn more
+          in our <button>Privacy Policy</button>
+          and
+          <button>Cookie Policy.</button>
+          You can update your settings at any time via Privacy Settings.
+        </div>
+        <div class="options">
+          <button>Update Settings</button><button class="accept">Accept</button>
+        </div>
+      </div>
+    </div>
+    <div id="player"></div>
+    <script>
+      var tag = document.createElement("script");
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          videoId: "dQw4w9WgXcQ",
+          playerVars: {
+            playsinline: 1,
+            controls: 0,
+          },
+          events: {
+            onReady: onPlayerReady,
+          },
+        });
+      }
+
+      let toPlay = false;
+      document
+        .querySelector(".cookie-banner-overlay")
+        .addEventListener("click", () => {
+          toPlay = true;
+        });
+
+      function onPlayerReady(event) {
+        if (toPlay) {
+          play(event);
+        }
+        document
+          .querySelector(".cookie-banner-overlay")
+          .addEventListener("click", () => {
+            play(event);
+          });
+      }
+      function play(event) {
+        document.querySelector("#player").style.display = "block";
+        event.target.playVideo();
+      }
+    </script>
+  </body>
+  <style>
+    * {
+      font-family: Arial, Helvetica, sans-serif;
+      box-sizing: border-box;
+    }
+    html,
+    body,
+    .img-background,
+    .background-gradient {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    body {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    #background {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+    }
+    #player {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 50;
+      position: absolute;
+      top: 0;
+    }
+    .cookie-banner-overlay {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 20;
+    }
+    .cookie-banner {
+      width: 34rem;
+      max-width: 90vw;
+      background-color: white;
+      border-radius: 1.5rem;
+      padding: 1.75rem 2rem;
+    }
+    .cookie-banner h2 {
+      font-size: 1rem;
+      font-weight: bold;
+      padding-bottom: 0.5rem;
+    }
+    .cookie-banner .text {
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+    .cookie-banner .text button {
+      border: none;
+      background-color: white;
+      cursor: pointer;
+      font-size: 1.125rem;
+      text-decoration: underline;
+    }
+    .cookie-banner .options button {
+      border: none;
+      padding: 1rem 1.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 5rem;
+      margin: 0 0.5rem;
+      margin-top: 1rem;
+      background-color: white;
+      cursor: pointer;
+    }
+    .cookie-banner .options .accept {
+      background-color: black;
+      color: white;
+    }
+    .cookie-banner .options button:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+    .cookie-banner .options .accept:hover {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+    .cookie-banner .options {
+      display: flex;
+      justify-content: right;
+    }
+    iframe {
+      pointer-events: none;
+    }
+    @media (max-width: 370px) {
+      .cookie-banner .options button {
+        margin: 0.25rem 0;
+      }
+      .cookie-banner .options {
+        flex-direction: column;
+      }
+    }
+  </style>
+</html>
